@@ -1,0 +1,52 @@
+# the config for current running
+pipeline: clam
+
+dataset:
+  data_path: "data/camelyon16/dsmil_files"
+  csv_path: "data/split/camelyon16"
+  fold: fold_1
+  batch_size: 1
+  num_workers: 8
+
+model:
+  name: clam_sb
+  input_dim: 512
+  embed_dim: 512
+  num_classes: 2
+  gate: true
+  size_arg: small
+  dropout: false
+  k_sample: 10
+
+optim:
+  optimizer: Adam
+  loss: ce
+  # gradient clipping
+  clip: 
+  lr: 0.0001
+  bag_weight: 0.7
+  weight_decay: 1.e-5
+  betas: false
+  epochs: 100
+  save_period: 1
+  # lr_scheduler: if warmup, the step will be 
+  lr_scheduler: warmup 
+  step_size: 10
+  amsgrad: true
+
+stat:
+  monitor:
+    mode: "max"
+    metric: "AUC"
+    early_stop: 30
+    metric_curves: false
+    display_port: 8099
+  record_dir: output
+  resume:
+
+misc:
+  # the name only for this running, not the task
+  running_name: 'camelyon16/clam_sb/MFC'
+  cuda: "1"
+  seed: 666
+  

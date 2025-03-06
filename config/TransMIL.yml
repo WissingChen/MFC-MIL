@@ -1,0 +1,52 @@
+# the config for current running
+pipeline: transmil
+
+dataset:
+  # data_path: "data/camelyon16/dsmil_files"
+  # data_path: "data/Camelyon16_ctrans_baseline/pt_files"
+  data_path: "data/tcga_ctrans_baseline/data_tcga_lung_tree"
+  # data_path: "data/nsclc/pt_files"
+  # csv_path: "data/split/camelyon16"
+  csv_path: "data/split/nsclc"
+  fold: fold_1
+  batch_size: 1
+  num_workers: 8
+
+model:
+  name: transmil
+  input_dim: 768
+  embed_dim: 512
+  num_classes: 2
+
+optim:
+  optimizer: Adam
+  loss: ce
+  # gradient clipping
+  clip: 
+  lr: 2.e-4
+  weight_decay: 1.e-5
+  epochs: 100
+  betas: 
+  save_period: 1
+  # lr_scheduler: if warmup, the step will be 
+  lr_scheduler: warmup 
+  step_size: 10
+  amsgrad: true
+
+stat:
+  monitor:
+    mode: "max"
+    metric: "AUC"
+    early_stop: 30
+    metric_curves: false
+    display_port: 8099
+  record_dir: output
+  resume:
+
+misc:
+  # the name only for this running, not the task
+  # running_name: 'nsclc/transmil/mfc_hl'
+  running_name: 'camelyon16/transmil/ibmil'
+  cuda: "1"
+  seed: 2024
+  

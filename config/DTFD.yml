@@ -1,0 +1,50 @@
+# the config for current running
+pipeline: dtfd
+
+dataset:
+  # data_path: "data/camelyon16/dsmil_files"
+  data_path: "data/nsclc/pt_files"
+  # csv_path: "data/split/camelyon16"
+  csv_path: "data/split/nsclc"
+  fold: fold_1
+  batch_size: 1
+  num_workers: 8
+
+model:
+  name: dtfd
+  input_dim: 512
+  embed_dim: 512
+  num_classes: 2
+
+optim:
+  optimizer: Adam
+  loss: ce
+  # gradient clipping
+  clip: 
+  lr: 2.e-4
+  weight_decay: 1.e-5
+  epochs: 100
+  betas: 
+  save_period: 1
+  # lr_scheduler: if warmup, the step will be 
+  lr_scheduler: warmup 
+  step_size: 10
+  amsgrad: true
+
+stat:
+  monitor:
+    mode: "max"
+    metric: "AUC"
+    early_stop: 50
+    metric_curves: false
+    display_port: 8099
+  record_dir: output
+  resume:
+
+misc:
+  # the name only for this running, not the task
+  running_name: 'nsclc/dtfd/mfc'
+  # running_name: 'camelyon16/dtfd/mfc'
+  cuda: "1"
+  seed: 666
+  

@@ -1,0 +1,48 @@
+# the config for current running
+pipeline: mil
+
+dataset:
+  # data_path: "data/camlyon16/features/l1_feature/pt_files"
+  data_path: "data/nsclc/features/pt_files"
+  # csv_path: "data/split/camlyon16/fold_1.csv"
+  csv_path: "data/split/nsclc/fold_1.csv"
+  batch_size: 512
+  k: 10
+  num_workers: 4
+
+model:
+  name: max_mil
+  input_dim: 512
+  embed_dim: 512
+  num_classes: 2
+
+optim:
+  optimizer: Adam
+  loss: ce
+  # gradient clipping
+  clip: 
+  lr: 2.e-4
+  weight_decay: 1.e-5
+  epochs: 300
+  save_period: 1
+  # lr_scheduler: if warmup, the step will be 
+  lr_scheduler: warmup
+  step_size: 30
+  amsgrad: true
+
+stat:
+  monitor:
+    mode: "max"
+    metric: "AUC"
+    early_stop: 50
+    metric_curves: false
+    display_port: 8099
+  record_dir: output
+  resume:
+
+misc:
+  # the name only for this running, not the task
+  running_name: 'maxmil_nsclc_fold_1'
+  cuda: "2"
+  seed: 666
+  
