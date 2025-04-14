@@ -12,7 +12,7 @@ Multiple Instance Learning (MIL) in digital pathology Whole Slide Image (WSI) an
 
   ```
   # clone the repository
-  git clone https://github.com/WissingChen/CRA-GQA.git
+  git clone https://github.com/WissingChen/MFC-MIL.git
 
   # create a conda environment
   conda env create -f requirements.yml
